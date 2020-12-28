@@ -3,7 +3,7 @@
 My attempts at the [Advent of Code 2020](https://adventofcode.com/2020/) challenge, 
 using Clojure (1.10.x) as my power tool of
 choice. I'm not doing it at the actual time the daily challenges were released, but I
-promise I'm not peeking at other's solutions or the answers.
+promise I'm not peeking at others' solutions or the answers.
 
 ## License
 
