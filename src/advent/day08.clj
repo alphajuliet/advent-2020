@@ -19,6 +19,7 @@
        (map #(str/split % #"\s+"))
        (map convert-args)))
 
+;;----------------
 (defn exec-instr
   "Execute each instruction, which is an opcode and an argument."
   [[op arg] state]
@@ -26,34 +27,37 @@
     (case op
       "nop" (-> state
                 (update :visited #(conj % (:pc state)))
-                (update :ninstrs inc)
                 (update :pc inc))
       "acc" (-> state
                 (update :acc #(+ % arg))
                 (update :visited #(conj % (:pc state)))
-                (update :ninstrs inc)
                 (update :pc inc))
       "jmp" (-> state
                 (update :visited #(conj % (:pc state)))
-                (update :ninstrs inc)
                 (update :pc #(+ % arg)))
-      :default (throw "Error: unknown opcode"))))
+      :default (throw (AssertionError. "Unrecognised opcode")))))
 
 (defn run-code
   "Main execution loop."
   [code]
-  (let [initial-state {:pc 0 :acc 0 :visited [] :ninstrs 0}
+  (let [initial-state {:pc 0 :acc 0 :visited [] :exit :timeout}
         max-instrs 1000]
     (reduce
-     (fn [state i]
-       (if (or (>= (:pc state) (count code))
-               (some #(= % (:pc state)) (:visited state)))
-         ;; halt if we either run out of code
-         ;; or we've executed this instruction before.
-         (reduced state)
+     (fn [state _]
+       (cond
+         ;; If normal termination
+         (>= (:pc state) (count code))
+         ;; then
+         (reduced (into state {:exit :normal}))
+
+         ;; If we've executed this instruction before
+         (some #(= % (:pc state)) (:visited state))
+         ;; then
+         (reduced (into state {:exit :loop}))
 
          ;;else execute the current instruction at the program counter
-         (exec-instr (nth code (:pc state)) state)))
+         :else (exec-instr (nth code (:pc state)) state)))
+
      initial-state
      (range max-instrs))))
 
@@ -65,7 +69,30 @@
        run-code))
 
 ;;----------------
+(defn filter-nop-jmp
+  "Filter the line numbers of executed nop or jmp instructions."
+  [code state]
+  (filter #(re-matches #"nop|jmp" (first (nth code %)))
+          (:visited state)))
+
+(defn patch-instr
+  "Patch the code at the given line number."
+  [code line-number]
+  (update-in (vec code) [line-number 0]
+             #(case %
+                "nop" "jmp"
+                "jmp" "nop")))
+
+(defn try-patch-all
+  "Brute force execution of changing all nop and jmp instructions."
+  [code]
+  (let [nop-or-jmp (filter-nop-jmp code (run-code code))]
+    (map #(run-code (patch-instr code %))
+         nop-or-jmp)))
+
+;;----------------
 (def testf "data/day08-test.txt")
+(def testf1 "data/day08-test1.txt")
 (def inputf "data/day08-input.txt")
 
 (defn part1
@@ -73,5 +100,14 @@
   (-> f
       run-file
       :acc))
+
+(defn part2
+  [f]
+  (->> f
+       read-code
+       try-patch-all
+       (filter #(= :normal (:exit %)))
+       first
+       :acc))
 
 ;; The End
