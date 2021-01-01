@@ -7,8 +7,8 @@
 ;; ----------------
 ;; Utilities
 
-(def f0 "data/day02-test.txt")
-(def f1 "data/day02-input.txt")
+(def testf "data/day02-test.txt")
+(def inputf "data/day02-input.txt")
 
 (defn- get-range
   "Turn a string range into a vector, e.g \"1-3\" => (1 3)"
@@ -32,7 +32,6 @@
         n (count (re-seq (re-pattern ch) s))]
     (<= min n max)))
 
-
 ;; ----------------
 ;; Part 2
 
@@ -52,7 +51,10 @@
        (filter true?)
        count))
 
-(defn go
-  []
-  (println (count-valid matcher1 f1)
-           (count-valid matcher2 f1)))
+(defn part1
+  [f]
+  (count-valid matcher1 f))
+
+(defn part2
+  [f]
+  (count-valid matcher2 f))
