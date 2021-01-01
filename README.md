@@ -25,9 +25,35 @@ I could probably have pulled the line apart a bit more efficiently with `re-seq`
 
 We solve the toboggan problem by rotating vectors by given amounts, corresponding to the slope. For part 1 we rotate each row by a constant (x) times the row number (y), and count the number of trees as the first element. For part 2, we are given a collection of slopes, so we iterate through them all as for part 1, with the minor complication of handling a multiple of rows (y value). The `check-trees` function was refactored to handle this.
 
+### Day 4
+
+This challenge is elegantly solved in Clojure using the `spec` library. We parse everything into a Clojure map, and then validate the map against a spec. The parsing is the painful bit, and again, I could have maybe done it better with `re-seq` but I haven't used regexs much in Clojure up to now.
+
+The important spec is `::passport`, which was refactored for part 2 to include the narrower constraints for each field.
+
+### Day 5
+
+Once you realise that the boarding pass code is simply a binary representation with letters instead of numbers, it becomes simple. The easy way to deal with this was to pre-parse the input data using the shell invocation `tr "BFRL" "01"` to convert the letters into the corresponding 0 or 1 value. 
+
+In part 1 we read the binary numbers, convert them to decimal with `Integer/parseInt`, and simply look for the largest number in the list. For part 2, we generate all the seat numbers in the same range as our input data, and use the set `difference` function to identify the missing one.
+
+### Day 6
+
+Sets come to the rescue in this challenge. In part 1, we parse the input into lists of answers, and turn them into sets which removes the duplicates, ie. a union. We then count up the total of elements in each set using `reduce`.
+
+For part 2, we need to look at the intersections with a bit more parsing, and then count up the numbers again for each set. 
+
+### Day 7
+
+Ok, for this one I couldn't resist using a graph network because (a) I like graphs, and (b) the `ubergraph` library in Clojure is nice and easy to use. The problem lends itself very well to a graph, so the first step was to parse each line into a relationship between source and target nodes, with the multiplicity captured as the edge weight. Each relationship is then added to the graph as a *directed* edge.
+
+Once everything is in a directed graph then we can apply some graph algorithms, thanks again to `ubergraph`. In part 1 we look at all the nodes that are reachable from the given start node, thanks for the `alg/shortest-path` function that returns all paths from a given starting node.
+
+Part 2 requires a bit more work because we need to recursively sum the multiplicities of all the upstream (i.e. incoming) edges to the given node. The `sum-incoming-weights` does this recursive traversal of the graph, using a slightly complicated reducing function to collect the sub-total.
+
 ### Day 10
 
-This challenge is about looking at the differences between consecutive elements in the sequence of adaptors. For part 1, we generate the vector of `deltas`, use the `frequencies` function to count the 1s and 3s, and then multiply the two counts to get the answer.
+This challenge is about looking at the differences between consecutive elements in the sequence of adaptors. For part 1, we generate the vector of `deltas`, use the built-in `frequencies` function to count the 1s and 3s, and then multiply the two counts to get the answer.
 
 In part 2, because the number of possible sequences is huge (2^n), we need to be smarter. For the first test set, if you write out the number of possible sequences, you see that you get multiple paths through a region iff there is a sequence of at least three consecutive numbers. For example, 4 -> 5 -> 6 allows the two paths: 4 -> 5 -> 6 and 4 -> 6. Similarly for four number there are 4 possible paths, for five there are 7 paths. At that point the limit of jumping by 3 is reached, and any longer sequences are the overlap of two or more sequences of five consecutive numbers. 
 
