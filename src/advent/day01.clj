@@ -12,25 +12,26 @@
        (map #(Integer/parseInt %))
        (sort <)))
 
-(def a (import-data "data/day01-input.txt"))
+(def inputf "data/day01-input.txt")
 
 ;; Part 1
-(def x
- (for [i (filter (partial < 1010) a)
-       j (filter (partial >= 1010) a)
-       :when (= (+ i j) 2020)]
-   (* i j)))
+(defn part1
+  [f]
+  (let [coll (import-data f)]
+    (for [i (filter (partial < 1010) coll)
+          j (filter (partial >= 1010) coll)
+          :when (= (+ i j) 2020)]
+      (* i j))))
 
 ;; Part 2
-(def y
- (for [i a
-       j a
-       k a
-       :when (< i j k)
-       :when (= (+ i j k) 2020)]
-   (* i j k)))
-
-(time
- (println x y))
+(defn part2
+  [f]
+  (let [coll (import-data f)]
+    (for [i coll
+          j coll
+          k coll
+          :when (< i j k)
+          :when (= (+ i j k) 2020)]
+      (* i j k))))
 
 ;; The End
