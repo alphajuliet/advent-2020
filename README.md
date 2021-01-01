@@ -49,7 +49,21 @@ Ok, for this one I couldn't resist using a graph network because (a) I like grap
 
 Once everything is in a directed graph then we can apply some graph algorithms, thanks again to `ubergraph`. In part 1 we look at all the nodes that are reachable from the given start node, thanks for the `alg/shortest-path` function that returns all paths from a given starting node.
 
-Part 2 requires a bit more work because we need to recursively sum the multiplicities of all the upstream (i.e. incoming) edges to the given node. The `sum-incoming-weights` does this recursive traversal of the graph, using a slightly complicated reducing function to collect the sub-total.
+Part 2 requires a bit more work because we need to recursively sum the multiplicities of all the upstream (i.e. incoming) edges to the given node. The `sum-incoming-weights` does this recursive traversal of the graph, using a slightly complicated reducing function to collect the sub-total. This is my favourite challenge so far.
+
+### Day 8
+
+Being an electrical engineering and computer science major gives me an handy headstart on analysing this challenge, which requires implementing a very simple microcontroller with just three instructions. The core of this is the `run-code` function that takes an initial state, and steps through the given code, fetching instructions and executing them via a reducing function that maintains the state. This is quite a compact and elegant way of implementing a finite state machine. 
+
+The only quirk is that we need to maintain a list of visited states, so we can determine if we've entered an infinite loop. We break when we either terminally normally by the program counter (pc) running out of instructions, or because we're attempting to execute an instruction we've seen before.
+
+Part 1 keeps track of the accumulator register and returns the result before we enter a loop. In part 2 we run through all the `nop` and `jmp` instructions and invert them to see if we avoid entering a loop in the resulting program.
+
+### Day 9
+
+For this one, we need to mess about with sequences and sums over a moving window. The core function for part 1 is `not-a sum`, which checks that a number is not a sum of the previous `n` numbers. 
+
+For the second part, we need to exhaustively generate all the candidate sequences and filter the ones that add to the target, then add the min and max of that range for the result. A bit of fiddly work with sub-sequences and filters.
 
 ### Day 10
 
