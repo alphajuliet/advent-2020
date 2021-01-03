@@ -73,6 +73,12 @@ In part 2, because the number of possible sequences is huge (2^n), we need to be
 
 When this translates to deltas, it means we need to look at the length of the sequences of 1s. Four consecutive numbers gives us deltas of `[1 1 1]`. Because the deltas only consist of 1s and 3s, we just partition the delta vector on the element 3. We then run each sequence through a case statement in `paths` to generate the number of paths.  We then multiply them all together. The result can only be a multiple of powers of 2 and 7. 
 
+### Day 11
+
+This is very similar to Conway's Game of Life but with three states, not two. We read in the text file and convert the characters to 0 (floor), 1 (unoccupied), or 2 (occupied). I then take advantage of the `clojure.core.matrix` library to do the heavy lifting and the `neighbour` function to get the adjacent states.
+
+In part 1, we iterate with a reducing function (yet again) that uses the given rules to evolve the matrix. When the input and output are the same, we exit the loop and count the 2s.
+
 ## License
 
 Copyright © 2020 Andrew Joyner
