@@ -1,13 +1,31 @@
 # Advent of Code 2020
 
 My attempts at the [Advent of Code 2020](https://adventofcode.com/2020/) challenge, 
-using Clojure (1.10.x) as my power tool of
-choice. I'm not doing it at the actual time the daily challenges were released, but I
-promise I'm not peeking at others' solutions or the answers.
+using Clojure (1.10.x) as my power tool of choice, because it's both a nice and often elegant experience, and to sharpen my skills. 
+
+I have clearly not attempted the daily challenges at the time they were released, but I promise I'm not peeking at others' solutions, discussions, or the answers. This is all my own work, or so far at least.
+
+## Lines of code
+
+Raw SLOC stats for each day's solution.
+
+Day | Source lines
+----|-------------
+   1|  37
+   2|  60
+   3|  46
+   4|  81
+   5|  32
+   6|  40
+   7| 119
+   8| 113
+   9|  68
+  10|  55
+  11| 184
 
 ## Commentary
 
-Some comments on the challenges.
+Some comments on my solutions.
 
 ### Day 1
 
@@ -75,9 +93,11 @@ When this translates to deltas, it means we need to look at the length of the se
 
 ### Day 11
 
-This is very similar to Conway's Game of Life but with three states, not two. We read in the text file and convert the characters to 0 (floor), 1 (unoccupied), or 2 (occupied). I then take advantage of the `clojure.core.matrix` library to do the heavy lifting and the `neighbour` function to get the adjacent states.
+This is very similar to Conway's Game of Life but with three states, not two. We read in the text file and convert the characters to 0 (floor), 1 (unoccupied), or 2 (occupied). We then take advantage of the `clojure.core.matrix` library to do the heavy lifting and the `neighbour` function to get the adjacent states.
 
 In part 1, we iterate with a reducing function (yet again) that uses the given rules to evolve the matrix. When the input and output are the same, we exit the loop and count the 2s.
+
+Part 2 requires some more calculation, where we look at the sequence of elements along a particular *ray* heading in a given direction from a starting point in the matrix. We return the first non-zero value we hit, or return zero if we overrun the boundaries of the matrix. The ray sequences are lazy and we take only what we need. This is the longest program so far but there is a fair amount of code duplication to account for the two parts. We could certainly shorten the code by refactoring, but it could impact readability.
 
 ## License
 
