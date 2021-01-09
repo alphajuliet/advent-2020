@@ -99,6 +99,12 @@ In part 1, we iterate with a reducing function (yet again) that uses the given r
 
 Part 2 requires some more calculation, where we look at the sequence of elements along a particular *ray* heading in a given direction from a starting point in the matrix. We return the first non-zero value we hit, or return zero if we overrun the boundaries of the matrix. The ray sequences are lazy and we take only what we need. This is the longest program so far but there is a fair amount of code duplication to account for the two parts. We could certainly shorten the code by refactoring, but it could impact readability.
 
+### Day 12
+
+This is another state machine, this time moving a ship around on a 2D plane. Both parts are pretty straightforward if you know your coordinate geometry. In part 1, we just need to relative to the heading of the ship by the number of units, and change the heading for left and right instructions.
+
+In part 2, we only go forward relative to a waypoint, and otherwise we are only shifting the waypoint. The ship heading becomes irrelevant. The core of this the formula for rotating a point around the origin. I guess I could have worked that out but I looked it up with a quick web search. Geometry is not the point of the challenge, coding is. Btw, the code was refactored for part 2, so part 1 no longer works. Go back to the previous commit if you're interested.
+
 ## License
 
 Copyright © 2020 Andrew Joyner
