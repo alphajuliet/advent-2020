@@ -101,9 +101,13 @@ Part 2 requires some more calculation, where we look at the sequence of elements
 
 ### Day 12
 
-This is another state machine, this time moving a ship around on a 2D plane. Both parts are pretty straightforward if you know your coordinate geometry. In part 1, we just need to relative to the heading of the ship by the number of units, and change the heading for left and right instructions.
+This is another state machine, this time moving a ship around on a 2D plane. Both parts are pretty straightforward if you know your coordinate geometry. In part 1, we just need to relative to the heading of the ship by the number of units, and change the heading on left and right instructions.
 
 In part 2, we only go forward relative to a waypoint, and otherwise we are only shifting the waypoint. The ship heading becomes irrelevant. The core of this the formula for rotating a point around the origin. I guess I could have worked that out but I looked it up with a quick web search. Geometry is not the point of the challenge, coding is. Btw, the code was refactored for part 2, so part 1 no longer works. Go back to the previous commit if you're interested.
+
+### Day 13
+
+Modular arithmetic comes to play in this challenge. In part 1, we need to find the minimum distance to the next multiple of the bus number from the given timestamp. I use what I call the complement modulo, which is the the divisor minus the remainder, and minimise for that over the collection. We need both the min and the argmin, which we multiply together. Nice and easy.
 
 ## License
 
