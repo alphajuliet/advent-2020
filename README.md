@@ -4,6 +4,8 @@ My attempts at the [Advent of Code 2020](https://adventofcode.com/2020/) challen
 using Clojure (1.10.x) as my power tool of choice, because it's both a nice and often elegant experience, and to sharpen my skills. 
 
 I have clearly not attempted the daily challenges at the time they were released, but I promise I'm not peeking at others' solutions, discussions, or the answers. This is all my own work, or so far at least.
+I also give myself more than a day to complete them, depending on the
+difficulty of course, and my availability and motivation.
 
 ## Lines of code
 
@@ -22,6 +24,8 @@ Day | Source lines
    9|  68
   10|  55
   11| 184
+  12|  66
+  13|  98
 
 ## Commentary
 
