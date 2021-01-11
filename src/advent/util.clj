@@ -1,7 +1,8 @@
 ;; util.clj
 
 (ns advent.util
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.pprint :as pp]))
 
 (defn swap [f x y] (f y x))
 
@@ -11,6 +12,12 @@
   (->> f
        (slurp)
        (str/split-lines)))
+
+(defn leftpad
+  "If S is shorter than LEN, pad it with CH on the left."
+  ([s len] (leftpad s len " "))
+  ([s len ch]
+   (pp/cl-format nil (str "~" len ",'" ch "d") (str s))))
 
 (defn rotate
   "Rotate s by n to the left. If n is negative rotates to the right."

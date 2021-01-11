@@ -33,7 +33,6 @@
   {:timestamp (Integer/parseInt ts)
    :routes (as-> routes <>
              (str/split <> #",")
-             #_(map #(str/replace % #"x" "0") <>)
              (replace {"x" "0"} <>)
              (map #(Integer/parseInt %) <>))})
 
@@ -49,8 +48,7 @@
   [a b p q]
   (let [[_ u v] (xgcd p q)
         x (+ (* p b u) (* q a v))
-        mn (* p q)
-        ]
+        mn (* p q)]
     (mod x mn)))
 
 (defn crt-solve
@@ -90,8 +88,7 @@
   (let [v (->> f
                read-notes
                get-data
-               :routes
-               )
+               :routes)
         [a m] (get-residues v)]
     (- (crt-solve a m) (dec (count v)))))
 
