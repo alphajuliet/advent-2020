@@ -26,6 +26,7 @@ Day | Source lines
   11| 184
   12|  66
   13|  98
+  14| 108
 
 ## Commentary
 
@@ -114,6 +115,12 @@ In part 2, we only go forward relative to a waypoint, and otherwise we are only 
 Modular arithmetic comes to play in this challenge. In part 1, we need to find the minimum distance to the next multiple of the bus number from the given timestamp. I use what I call the complement modulo, which is the the divisor minus the remainder, and minimise for that over the collection. We need both the min and the argmin, which we multiply together. Nice and easy.
 
 But then part 2 hits with a threat of very large numbers, making any linear search impractical. However, when we realise that this problem is equivalent to solving a system of linear modulo equations, then the [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem) from number theory shows us the way ahead. For the test set, we effectively need to solve the system: `x = 0 (mod 19) = 1 (mod 31) = 3 (mod 59) = 6 (mod 13) = 0 (mod 7)`, giving us the final answer of `x-7`. The recommended approach (in quadratic time) is to solve the first two equations, then add the third, and so on, by iteratively computing the Bezout coefficients using the extended Euclidean algorithm, and multiplying them through. I found a nice little `xgcd` function, but the rest is manual. The final challenge was to make sure we don't encounter arithmetic overflow. Using `bigint` gets over that.
+
+### Day 14
+
+This challenge is about bit operations, but using "X" for "don't care" or floating to encompass multiple locations in an address space. For the easy first part, we use X as a mask to propagate values, otherwise we set the bit accordingly. We add up all the values in the address space. Because the address space is large (2^36 locations), we use a sparse representation (a simple map) to hold the values, plus the most recent mask.
+
+For part 2, we introduce binary n-cubes. From a geometrical point of view, an X in a binary vector generates an "edge" in that dimension in the binary n-cube. Two Xs generates a plane, three a cube and so on. Consider the value "XX1"; this generates all values [001, 011, 101, 111], which corresponds to one of the faces of the binary 3-cube. My function `mask-gen` is the "clever" bit because it generates the corners of the n-cube from a given binary vector that includes X's. Then we need to do a different masking operation to generate multiple locations that we write values to. 
 
 ## License
 

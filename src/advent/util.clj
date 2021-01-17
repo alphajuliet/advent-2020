@@ -6,6 +6,15 @@
 
 (defn swap [f x y] (f y x))
 
+(defn number-of-bits
+  [n]
+  (if (zero? n) 0
+      (-> (Math/log n)
+            (/ (Math/log 2))
+            inc
+            Math/floor
+            int)))
+
 (defn import-data
   "Import and prepare the data"
   [f]
