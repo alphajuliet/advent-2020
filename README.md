@@ -27,6 +27,7 @@ Day | Source lines
   12|  66
   13|  98
   14| 108
+  15|  51
 
 ## Commentary
 
@@ -121,6 +122,12 @@ But then part 2 hits with a threat of very large numbers, making any linear sear
 This challenge is about bit operations, but using "X" for "don't care" or floating to encompass multiple locations in an address space. For the easy first part, we use X as a mask to propagate values, otherwise we set the bit accordingly. We add up all the values in the address space. Because the address space is large (2^36 locations), we use a sparse representation (a simple map) to hold the values, plus the most recent mask.
 
 For part 2, we introduce binary n-cubes. From a geometrical point of view, an X in a binary vector generates an "edge" in that dimension in the binary n-cube. Two Xs generates a plane, three a cube and so on. Consider the value "XX1"; this generates all values [001, 011, 101, 111], which corresponds to one of the faces of the binary 3-cube. My function `mask-gen` is the "clever" bit because it generates the corners of the n-cube from a given binary vector that includes X's. Then we need to do a different masking operation to generate multiple locations that we write values to. 
+
+### Day 15
+
+Part 1 is dead easy. Set up your rule for generating the next element and add it to the end of the vector. We use vector operations because we're dealing with the end of the sequence, and functions like `peek`, `pop`, and `subvec` are all well optimised for vectors. And of course, we use `reduce` to iterate, because that's being functional, kids.
+
+Part 2 is, of course, a different story. We're now looking at the 30,000,000th element in the sequence, not some piddly number in the thousands. After running some quick timings of sequences of increasing length, and even with a few optimisations, it's clear that holding a sequence that long and doing a search over it every iteration is not going to fly. We then realise, of course, that we only need to know the *last* time we saw the given number, and that the highest number seen so far in the sequence increases only very weakly against the sequence length. Enter the hash (using a Clojure map of course), where the keys are the numbers we've seen, and the key's value contains the index of where we saw it last. We also keep a note in the hash of the number we're comparing, and just update the hash in each iteration and pass it on. The performance with this approach is good enough that on my modest electronic abacus, the answer pops out in about a minute. Job done.
 
 ## License
 
