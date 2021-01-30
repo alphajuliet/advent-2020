@@ -129,6 +129,22 @@ Part 1 is dead easy. Set up your rule for generating the next element and add it
 
 Part 2 is, of course, a different story. We're now looking at the 30,000,000th element in the sequence, not some piddly number in the thousands. After running some quick timings of sequences of increasing length, and even with a few optimisations, it's clear that holding a sequence that long and doing a search over it every iteration is not going to fly. We then realise, of course, that we only need to know the *last* time we saw the given number, and that the highest number seen so far in the sequence increases only very weakly against the sequence length. Enter the hash (using a Clojure map of course), where the keys are the numbers we've seen, and the key's value contains the index of where we saw it last. We also keep a note in the hash of the number we're comparing, and just update the hash in each iteration and pass it on. The performance with this approach is good enough that on my modest electronic abacus, the answer pops out in about a minute. Job done.
 
+### Day 16
+
+The first part of Day 16 is setting up the validation rules as a series of
+predicates and filtering, with appropriate boolean combinations, all the ticket
+numbers through the rules. So far, so good. 
+
+The second part by comparison has me bogged down. We need to effectively match
+up each column of numbers to a matching validation rule, and do this by a series
+of eliminations. This strikes me as solving for n variable with n+1 equations,
+or equivalently, using row (or columns by transpose) reduction on a matrix.
+My problem is that I think it's a 3-d matrix (or tensor) of ticket, ticket
+numbers, and validations, and I don't yet know how
+to reduce the complexity enough to tackle it in code. I am abandoning it for
+now, because it's pissing me off, and maybe come back to it later.
+
+
 ## License
 
 Copyright © 2021 Andrew Joyner

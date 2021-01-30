@@ -6,7 +6,19 @@
 
 (defn swap [f x y] (f y x))
 
+;; filter-if :: ∀ a. List Boolean -> List a -> List a
+(defn filter-if
+  "Filter c2 according to the truth of the corresponding element in c1.
+  (filter-if [true false true] [1 2 3]) => [1 3]"
+  [c1 c2]
+  (remove nil? (map #(if %1 %2) c1 c2)))
+
+;; Transpose a list of lists
+(def T (partial apply map list))
+
+;; number-of-bits :: Number -> Integer
 (defn number-of-bits
+  "Number of bits required to store `n`."
   [n]
   (if (zero? n) 0
       (-> (Math/log n)
@@ -15,6 +27,7 @@
             Math/floor
             int)))
 
+;; import-data :: IO File -> List String
 (defn import-data
   "Import and prepare the data"
   [f]
