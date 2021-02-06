@@ -28,6 +28,10 @@ Day | Source lines
   13|  98
   14| 108
   15|  51
+  16| 139*
+  17| 125
+  
+Note: day 16 is not yet finished.
 
 ## Commentary
 
@@ -144,6 +148,11 @@ numbers, and validations, and I don't yet know how
 to reduce the complexity enough to tackle it in code. I am abandoning it for
 now, because it's pissing me off, and maybe come back to it later.
 
+### Day 17
+
+Part 1 is John Conway's Game of Life in 3D. We are given a 2D slice, which we need to embed in a 3D array and cycle through 6 generations and count the live cells at the end. I used a map to hold the 3D grid as a sparse array for faster lookup and lower memory usage. The test case explanation was a little confusing but a quick search cleared up my misunderstanding.
+
+Part 2 lifts the challenge to 4D. Fortunately, the part 1 code was able to be easily expanded to 4D with only a bit of refactoring, and some 4D versions of the high-level functions were created to make it easy. There is a lot more data to handle here, so it takes significantly longer to calculate the result, but we get there in the end. No doubt, there are some clever potential optimisations to speed it up, but getting the answer once is all we need.
 
 ## License
 
