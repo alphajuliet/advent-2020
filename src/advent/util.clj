@@ -1,5 +1,3 @@
-;; util.clj
-
 (ns advent.util
   (:require [clojure.string :as str]
             [clojure.pprint :as pp]))
@@ -68,5 +66,15 @@
       (if (pred (first s))
         (cons (first s) nil)
         (cons (first s) (take-until pred (rest s)))))))
+
+(defn mapmap
+  "Do a deep map of 2-level structure."
+  [f x]
+  (map (fn [y] (map f y)) x))
+
+(defn map-kv
+  "Map over a map."
+  [f coll]
+  (reduce-kv (fn [m k v] (assoc m k (f v))) (empty coll) coll))
 
 ;; The End
