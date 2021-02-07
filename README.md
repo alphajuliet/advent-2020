@@ -154,6 +154,10 @@ Part 1 is John Conway's Game of Life in 3D. We are given a 2D slice, which we ne
 
 Part 2 lifts the challenge to 4D. Fortunately, the part 1 code was able to be easily expanded to 4D with only a bit of refactoring, and some 4D versions of the high-level functions were created to make it easy. There is a lot more data to handle here, so it takes significantly longer to calculate the result, but we get there in the end. No doubt, there are some clever potential optimisations to speed it up, but getting the answer once is all we need.
 
+### Day 18
+
+So far, we haven't done anything with trees. Day 18 fixes that by exploring syntax trees. In part 1, we need to build a simple parser and evaluate the resulting tree. Clojure has a lovely package called `instaparser` that does all the hard work here, both in creating a parser from an EBNF grammar, but also a means of quickly evaluating the syntax tree using a transformer. The grammar in part 1 is a simple left-to-right approach, with parentheses. Part 2 requires some precedence, but in the opposite way to normal, so the grammar is a little more complex. Either way, the solutions are pretty compact.
+
 ## License
 
 Copyright © 2021 Andrew Joyner

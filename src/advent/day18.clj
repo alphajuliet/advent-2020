@@ -9,13 +9,24 @@
   (->> f util/import-data))
 
 ;;----------------
-;; Define the grammar
-(def gr
+;; Define the grammar for part 1
+(def gr-1
   (insta/parser
    "expr = element
    <element> = term | add | mul
    add = element <'+'> term
    mul = element <'*'> term
+   <term> = number | <'('> element <')'>
+   number = #'\\d+';"))
+
+;; And part 2
+(def gr-2
+  (insta/parser
+   "expr = element
+   <element> = add-elt | mul
+   mul = element <'*'> add-elt
+   <add-elt> = term | add
+   add = add-elt <'+'> term
    <term> = number | <'('> element <')'>
    number = #'\\d+';"))
 
@@ -27,10 +38,10 @@
    :expr identity})
 
 (defn evaluate
-  "Parse and evaluate the syntax tree."
-  [s]
+  "Parse and evaluate a string using the given parser."
+  [p s]
   (->> (str/replace s #"\s+" "")
-       gr
+       p
        (insta/transform xf)))
 
 ;;----------------
@@ -40,7 +51,14 @@
   [f]
   (->> f
        read-expressions
-       (map evaluate)
+       (map (partial evaluate gr-1))
+       (apply +)))
+
+(defn part2
+  [f]
+  (->> f
+       read-expressions
+       (map (partial evaluate gr-2))
        (apply +)))
 
 ;; The End
