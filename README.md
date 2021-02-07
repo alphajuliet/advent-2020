@@ -30,6 +30,7 @@ Day | Source lines
   15|  51
   16| 139*
   17| 125
+  18|  64
   
 Note: day 16 is not yet finished.
 
