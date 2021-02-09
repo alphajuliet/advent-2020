@@ -31,6 +31,7 @@ Day | Source lines
   16| 139*
   17| 125
   18|  64
+  19|  34
   
 Note: day 16 is not yet finished.
 
@@ -157,7 +158,11 @@ Part 2 lifts the challenge to 4D. Fortunately, the part 1 code was able to be ea
 
 ### Day 18
 
-So far, we haven't done anything with trees. Day 18 fixes that by exploring syntax trees. In part 1, we need to build a simple parser and evaluate the resulting tree. Clojure has a lovely package called `instaparser` that does all the hard work here, both in creating a parser from an EBNF grammar, but also a means of quickly evaluating the syntax tree using a transformer. The grammar in part 1 is a simple left-to-right approach, with parentheses. Part 2 requires some precedence, but in the opposite way to normal, so the grammar is a little more complex. Either way, the solutions are pretty compact.
+So far, we haven't done anything with trees. Day 18 fixes that by exploring syntax trees. In part 1, we need to build a simple parser and evaluate the resulting tree. Clojure has a lovely package called [instaparse](https://github.com/Engelberg/instaparse) that does all the hard work here, both in creating a parser from an EBNF grammar, but also a means of quickly evaluating the syntax tree using a transformer. The grammar in part 1 is a simple left-to-right approach, with parentheses. Part 2 requires some precedence, but in the opposite way to normal, so the grammar is a little more complex. Either way, the solutions are pretty compact.
+
+### Day 19
+
+Once again, we're dealing with creating parsers, but this time we're given all the rules in an EBNF grammar. What makes this really convenient is that the `instaparse` libary we used in Day 18 can just read all the rules in the input file, with only a semicolon appended to each rule to join them into a single string. For part 1, this takes no time, and the answer pops out. For part 2, we modify the rules to the suggested alternatives and run the same program again to give the new answer. This one was quick, but, again, `instaparse` has done all the heavy lifting. Thanks, [Mr Engleberg](https://github.com/Engelberg).
 
 ## License
 
