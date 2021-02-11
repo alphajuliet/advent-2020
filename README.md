@@ -164,6 +164,12 @@ So far, we haven't done anything with trees. Day 18 fixes that by exploring synt
 
 Once again, we're dealing with creating parsers, but this time we're given all the rules in an EBNF grammar. What makes this really convenient is that the `instaparse` libary we used in Day 18 can just read all the rules in the input file, with only a semicolon appended to each rule to join them into a single string. For part 1, this takes no time, and the answer pops out. For part 2, we modify the rules to the suggested alternatives and run the same program again to give the new answer. This one was quick, but, again, `instaparse` has done all the heavy lifting. Thanks, [Mr Engleberg](https://github.com/Engelberg).
 
+### Day 20
+
+This looks like a killer to begin with, having to solve a tile puzzle by rotating and flipping every piece and see what fits together into a grid. However, we start by realising that all we need are the edges; we can ignore the rest. Each edge is a binary vector, so for each tile, we generate four numbers that capture the pattern at each edge, *plus* another four numbers that are the reverse of each edge, in case the tile is rotated or flipped. Some basic pencil and paper work will convince you that this is all you need. 
+
+We then realise that we don't actually need to solve the puzzle, just find the corner pieces. These are the pieces that only match edges with *two* other tiles. We use a long functional pipeline to generate the edges, put them into tuples, sort them, filter the matching ones, group them by tile, and count the edges. The only wrinkle is that both the forward and reverse edges will match, so double the quantities.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
