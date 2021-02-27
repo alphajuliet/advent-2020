@@ -82,9 +82,10 @@
        (every? true?)))
 
 (defn validation-results
-  [vs ticket]
-  (->> ticket
-       (map (fn [x] (map #(if (% x) 1 0) vs)))))
+  "Apply all the validators to the list of numbers and map false|true to 0|1."
+  [vs lst]
+  (->> vs
+       (map (fn [v] (map #(if (v %) 1 0) lst)))))
 
 (defn valid-counts
   [vs ticket]
@@ -115,26 +116,24 @@
   [f]
   (let [[rules my-ticket nearby-tickets] (read-notes f)
         validators (map make-validator rules)
-        labels (map get-field-names rules)
-        mine (process-tickets my-ticket)
+        ;; labels (map get-field-names rules)
+        ;; mine (process-tickets my-ticket)
         tickets (process-tickets nearby-tickets)]
     (->> tickets
-         (map #(valid-ticket? validators %)))))
+         (filter (partial valid-ticket? validators))
+         util/T)))
 
 ;;----------------
 ;; Working
 
-(def z (read-notes inputf))
+(def z (read-notes testf2))
 (def vs (map make-validator (first z)))
 (def labels (map get-field-names (first z)))
-(def y (->> z
-            last
+(def y (->> (last z)
             process-tickets
             (filter (partial valid-ticket? vs))))
+(def yt (util/T y))
+(def x (map #(validation-results vs %) yt))
 
-;; Generate a 3-d tensor of tickets x ticket numbers x validation results
-(def m3 (->> y
-             (map (partial validation-results vs))
-             (m/array)))
 
 ;; The End

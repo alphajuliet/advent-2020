@@ -11,6 +11,10 @@
   [c1 c2]
   (remove nil? (map #(if %1 %2) c1 c2)))
 
+(defn delete
+  [coll elt]
+  (remove #(= % elt) coll))
+
 ;; Transpose a list of lists
 (def T (partial apply map list))
 
@@ -40,16 +44,25 @@
    (pp/cl-format nil (str "~" len ",'" ch "d") (str s))))
 
 (defn rotate
-  "Rotate s by n to the left. If n is negative rotates to the right."
-  [n s]
-  (let [shift (mod n (count s))]
-    (concat (drop shift s)
-            (take shift s))))
+  "Rotate collection by n to the left. If n is negative rotates to the right."
+  [n coll]
+  (let [shift (mod n (count coll))]
+    (into [] (concat (drop shift coll)
+                     (take shift coll)))))
 
 (defn rotate-string
   "Rotate a string."
   [n s]
   (apply str (rotate n s)))
+
+(defn swap-elements
+  "Swap elements i and j in coll."
+  [coll i j]
+  (let [a (nth coll i)
+        b (nth coll j)]
+    (-> coll
+        (assoc i b)
+        (assoc j a))))
 
 (defn count-if
   "Utility function"

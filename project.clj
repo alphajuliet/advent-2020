@@ -8,6 +8,7 @@
                  [spec-dict "0.2.1"]
                  [ubergraph "0.8.2"]
                  [instaparse "1.4.10"]
+                 [meander/epsilon "0.0.602"]
                  [net.mikera/core.matrix "0.62.0"]]
   :main ^:skip-aot advent.core
   :target-path "target/%s"

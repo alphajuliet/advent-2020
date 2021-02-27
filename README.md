@@ -37,7 +37,7 @@ Note: day 16 is not yet finished.
 
 ## Commentary
 
-Some comments on my solutions.
+Some comments on my solutions. No answers, just how I approached them.
 
 ### Day 1
 
@@ -166,9 +166,9 @@ Once again, we're dealing with creating parsers, but this time we're given all t
 
 ### Day 20
 
-This looks like a killer to begin with, having to solve a tile puzzle by rotating and flipping every piece and see what fits together into a grid. However, we start by realising that all we need are the edges; we can ignore the rest. Each edge is a binary vector, so for each tile, we generate four numbers that capture the pattern at each edge, *plus* another four numbers that are the reverse of each edge, in case the tile is rotated or flipped. Some basic pencil and paper work will convince you that this is all you need. 
+This looks like a killer to begin with: solve a tile puzzle by rotating and flipping every piece and see what fits together into a grid. We start by realising that all we need are the edges; we can ignore the rest. Each edge is essentially a 10-bit binary vector, so for each tile, we generate four numbers that capture the pattern at each edge, *plus* another four numbers that are the reverse of each edge, in case the tile is rotated or flipped. Some basic pencil and paper work will convince you that this is all you need. 
 
-We then realise that we don't actually need to solve the puzzle, just find the corner pieces. These are the pieces that only match edges with *two* other tiles. We use a long functional pipeline to generate the edges, put them into tuples, sort them, filter the matching ones, group them by tile, and count the edges. The only wrinkle is that both the forward and reverse edges will match, so double the quantities.
+We then realise that we don't actually need to solve the puzzle, just find the corner pieces. These are the pieces that only match edges with *two* other tiles. We use a long functional pipeline to generate the edges, put them into tuples, sort them, filter the matching ones, group them by tile, count the edges, and identify the corner tiles. The only wrinkle is that both the forward and reverse edges will match, so double the quantities.
 
 ## License
 
