@@ -28,7 +28,7 @@ Day | Source lines
   13|  98
   14| 108
   15|  51
-  16| 139*
+  16| 139
   17| 125
   18|  64
   19|  34
@@ -169,6 +169,14 @@ Once again, we're dealing with creating parsers, but this time we're given all t
 This looks like a killer to begin with: solve a tile puzzle by rotating and flipping every piece and see what fits together into a grid. We start by realising that all we need are the edges; we can ignore the rest. Each edge is essentially a 10-bit binary vector, so for each tile, we generate four numbers that capture the pattern at each edge, *plus* another four numbers that are the reverse of each edge, in case the tile is rotated or flipped. Some basic pencil and paper work will convince you that this is all you need. 
 
 We then realise that we don't actually need to solve the puzzle, just find the corner pieces. These are the pieces that only match edges with *two* other tiles. We use a long functional pipeline to generate the edges, put them into tuples, sort them, filter the matching ones, group them by tile, count the edges, and identify the corner tiles. The only wrinkle is that both the forward and reverse edges will match, so double the quantities.
+
+And then part 2 comes, and I'm done. If I can't work out a manual algorithm for
+doing this, then I can't turn it into code. This is the hardest puzzle so far
+and, from what I hear, the hardest one, full stop. 
+
+### And I'm done
+
+It's been a good run, and I've really enjoyed solving these puzzles. My Clojure skills and functional programming have arguably improved, and I've used all sorts of otherwise useless knowledge to make a dent. I could keep going with Day 21 but I've had enough for now. I expect I'll have a go at Advent 2021.
 
 ## License
 
